@@ -1,0 +1,16 @@
+backgrounds_dir: "backgrounds"
+images_dir: "images"
+
+segmasks:
+    mode: "alpha"       # "file" or "alpha"
+    masks_dir: "masks"  # "masks"
+
+output_dir: "output"    # "output"
+
+dataset:
+    batch_size: 64
+    num_workers: 4
+
+transform:
+    max_angle: 30
+    scale: [0.2, 3.0]   # [min, max]
