@@ -2,7 +2,7 @@ backgrounds_dir: "backgrounds"
 images_dir: "images"
 
 segmasks:
-    mode: "alpha"       # "file" or "alpha"
+    mode: "alpha"       # "file" or "alpha" (default)
     masks_dir: "masks"  # "masks"
 
 output_dir: "output"    # "output"
