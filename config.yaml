@@ -1,11 +1,14 @@
 backgrounds_dir: "backgrounds"
 images_dir: "images"
 
-segmasks:
-    mode: "alpha"       # "file" or "alpha"
-    masks_dir: "masks"  # "masks"
+# segmasks:
+#     mode: "alpha"       # "file" or "alpha"
+#     masks_dir: "masks"  # "masks"
 
-output_dir: "output"    # "output"
+labels_dir: "labels"
+labels_debug_dir: "debug"
+
+output_dir: "output"      # "output"
 
 dataset:
     batch_size: 64
