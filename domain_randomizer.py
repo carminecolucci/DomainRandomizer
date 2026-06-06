@@ -3,9 +3,9 @@
 import argparse
 import os
 
+# debug only
 import cv2
 
-# debug only
 import numpy as np
 import torch
 import yaml
@@ -400,6 +400,8 @@ class DomainRandomizerDataset(Dataset):
         return M
 
 def main() -> None:
+    print(f"Running on {device}")
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, default="config.yaml", help="configuration file")
     args = parser.parse_args()
@@ -415,6 +417,5 @@ def main() -> None:
         print("batch", batch_nr, "\tbg", batch[0].shape, "\timg", batch[1].shape)
 
 if __name__ == "__main__":
-    print(f"Running on {device}")
     main()
 
