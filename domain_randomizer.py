@@ -1,16 +1,17 @@
+#!/usr/bin/env python3
+
+import argparse
 import os
 
-import torch
-from torch.utils.data import DataLoader, Dataset
-from torchvision.io import decode_image, write_jpeg, ImageReadMode
-from torchvision.transforms.v2 import functional as TF
-
-import yaml
+import cv2
 
 # debug only
 import numpy as np
-import cv2
-
+import torch
+import yaml
+from torch.utils.data import DataLoader, Dataset
+from torchvision.io import ImageReadMode, decode_image, write_jpeg
+from torchvision.transforms.v2 import functional as TF
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -120,8 +121,8 @@ def transform(bg: torch.Tensor, img: torch.Tensor, angle: int, scale: float, pas
     if paste_pos is None:
         img_size = torch.tensor([*img.shape[-2:]], dtype=torch.int32)
         max_size = torch.max(torch.zeros(2, dtype=torch.int32), bg_size - img_size).tolist()
-        paste_y = torch.randint(0, max_size[0], (1,))
-        paste_x = torch.randint(0, max_size[1], (1,))
+        paste_y = torch.randint(0, max_size[0] + 1, (1,))
+        paste_x = torch.randint(0, max_size[1] + 1, (1,))
         paste_pos = torch.tensor([paste_y, paste_x])
     new_img = paste_image(bg, img, paste_pos)
 
@@ -399,7 +400,11 @@ class DomainRandomizerDataset(Dataset):
         return M
 
 def main() -> None:
-    with open("config.yaml") as fp:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="config.yaml", help="configuration file")
+    args = parser.parse_args()
+
+    with open(args.config) as fp:
         config = yaml.safe_load(fp)
 
     dataset = DomainRandomizerDataset(config)
