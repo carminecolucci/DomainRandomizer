@@ -1,13 +1,14 @@
+#!/usr/bin/env python3
+
+import argparse
 import os
 
 import torch
+import yaml
 from torch.utils.data import DataLoader, Dataset
-from torchvision.io import decode_image, write_jpeg, ImageReadMode
+from torchvision.io import ImageReadMode, decode_image, write_jpeg
 from torchvision.transforms import v2 as T
 from torchvision.transforms.v2 import functional as TF
-
-import yaml
-
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -118,7 +119,11 @@ class DomainRandomizerDataset(Dataset):
 def main() -> None:
     print(f"Running on {device}")
 
-    with open("config.yaml") as fp:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default="config.yaml", help="configuration file")
+    args = parser.parse_args()
+
+    with open(args.config) as fp:
         config = yaml.safe_load(fp)
 
     dataset = DomainRandomizerDataset(config)
